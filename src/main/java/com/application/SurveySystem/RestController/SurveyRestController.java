@@ -1,5 +1,6 @@
 package com.application.SurveySystem.RestController;
 
+import com.application.SurveySystem.Model.ResultModel;
 import com.application.SurveySystem.Model.Survey;
 import com.application.SurveySystem.Service.SurveyService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -46,6 +47,11 @@ public class SurveyRestController {
         } catch(Exception ex) {
             return errorResponse(ex);
         }
+    }
+
+    @PutMapping("/response/{id}")
+    public ResponseEntity takeSurvey(@PathVariable Integer id, @RequestBody List<ResultModel> resultModels) {
+        return correctResponse(resultModels,HttpStatus.OK,HttpStatus.OK.value(),"Success",HttpStatus.OK);
     }
 
     public ResponseEntity correctResponse(Object value, Object error, int statusCode, String message, HttpStatus status) {

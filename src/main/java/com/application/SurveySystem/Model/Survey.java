@@ -1,13 +1,12 @@
 package com.application.SurveySystem.Model;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @NoArgsConstructor
@@ -19,4 +18,8 @@ public class Survey {
     private Integer surveyId;
     private String title;
     private String description;
+    @OneToMany(mappedBy = "survey")
+    @JsonManagedReference
+    private List<Question> question;
+    private Integer noOfTotalResponse;
 }

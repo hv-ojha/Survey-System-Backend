@@ -14,11 +14,16 @@ public class SurveyService {
     @Autowired
     private SurveyRepository surveyRepository;
 
+    @Autowired
+    private QuestionService questionService;
+
     public Survey addSurvey(Survey survey) throws Exception {
         if(survey == null) {
             throw new Exception("Parameter Missing");
         }
-        return surveyRepository.save(survey);
+        Survey survey1 = surveyRepository.save(survey);
+        questionService.addQuestion(survey.getQuestion());
+        return survey1;
     }
 
     public List<Survey> getSurveys() throws Exception {
