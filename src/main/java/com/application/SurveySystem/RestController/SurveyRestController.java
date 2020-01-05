@@ -71,9 +71,9 @@ public class SurveyRestController {
     public ResponseEntity errorResponse(Exception ex) {
         HashMap<Object, Object> response = new HashMap<>();
         response.put("timestamp", new Date());
-        response.put("error", HttpStatus.INTERNAL_SERVER_ERROR);
-        response.put("status", HttpStatus.INTERNAL_SERVER_ERROR.value());
+        response.put("error", HttpStatus.BAD_REQUEST);
+        response.put("status", HttpStatus.BAD_REQUEST.value());
         response.put("message", ex.getMessage());
-        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(response);
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
     }
 }

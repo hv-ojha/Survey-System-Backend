@@ -18,7 +18,6 @@ public class Question {
     @ManyToOne
     @JsonBackReference
     private Survey survey;
-
     private String question;
     private Integer numberOfYes;
     private Integer numberOfNo;
