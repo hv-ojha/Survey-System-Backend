@@ -51,7 +51,12 @@ public class SurveyRestController {
 
     @PutMapping("/response/{id}")
     public ResponseEntity takeSurvey(@PathVariable Integer id, @RequestBody List<ResultModel> resultModels) {
-        return correctResponse(resultModels,HttpStatus.OK,HttpStatus.OK.value(),"Success",HttpStatus.OK);
+        try {
+            Survey survey = surveyService.submitResponse(surveyService.getSurvey(id),resultModels);
+            return correctResponse(survey,HttpStatus.OK,HttpStatus.OK.value(),"Success",HttpStatus.OK);
+        } catch(Exception ex) {
+            return errorResponse(ex);
+        }
     }
 
     public ResponseEntity correctResponse(Object value, Object error, int statusCode, String message, HttpStatus status) {

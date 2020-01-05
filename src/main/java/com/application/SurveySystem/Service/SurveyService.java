@@ -1,5 +1,7 @@
 package com.application.SurveySystem.Service;
 
+import com.application.SurveySystem.Model.Question;
+import com.application.SurveySystem.Model.ResultModel;
 import com.application.SurveySystem.Model.Survey;
 import com.application.SurveySystem.Repository.SurveyRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,6 +26,17 @@ public class SurveyService {
         Survey survey1 = surveyRepository.save(survey);
         questionService.addQuestion(survey.getQuestion());
         return survey1;
+    }
+
+    public Survey submitResponse(Survey survey, List<ResultModel> resultModels) throws Exception {
+        if(survey == null && resultModels.isEmpty()) {
+            throw new Exception("No such Survey Exist");
+        }
+        synchronized (survey) {
+            survey.setNoOfTotalResponse(survey.getNoOfTotalResponse() == null ? 1 : survey.getNoOfTotalResponse() + 1);
+            List<Question> list = questionService.incrementResponse(survey.getSurveyId(), resultModels);
+        }
+        return surveyRepository.save(survey);
     }
 
     public List<Survey> getSurveys() throws Exception {
