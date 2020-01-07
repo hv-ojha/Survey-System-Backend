@@ -1,7 +1,9 @@
 package com.application.SurveySystem.RestController;
 
+import com.application.SurveySystem.Model.Question;
 import com.application.SurveySystem.Model.ResultModel;
 import com.application.SurveySystem.Model.Survey;
+import com.application.SurveySystem.Service.QuestionService;
 import com.application.SurveySystem.Service.SurveyService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -18,6 +20,9 @@ public class SurveyRestController {
 
     @Autowired
     private SurveyService surveyService;
+
+    @Autowired
+    private QuestionService questionService;
 
     @PostMapping("/")
     public ResponseEntity addSurvey(@RequestBody Survey survey) {
@@ -53,6 +58,7 @@ public class SurveyRestController {
     public ResponseEntity takeSurvey(@PathVariable Integer id, @RequestBody List<ResultModel> resultModels) {
         try {
             Survey survey = surveyService.submitResponse(surveyService.getSurvey(id),resultModels);
+            List<Question> questionList = questionService.incrementResponse(survey.getSurveyId(), resultModels);
             return correctResponse(survey,HttpStatus.OK,HttpStatus.OK.value(),"Success",HttpStatus.OK);
         } catch(Exception ex) {
             return errorResponse(ex);

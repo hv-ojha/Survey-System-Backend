@@ -6,7 +6,9 @@ Basic survey system which creates survey and takes response
 
 - Java
 - Spring Boot
-- H2 Database(In-memory database service provided by spring framework)
+- H2 Database(In-memory database service provided by spring framework for testing)
+- PostgreSQL
+- Postman (for API Testing)
 
 ## Functionality
 

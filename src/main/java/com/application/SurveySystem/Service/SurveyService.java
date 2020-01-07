@@ -34,7 +34,6 @@ public class SurveyService {
         }
         synchronized (survey) {
             survey.setNoOfTotalResponse(survey.getNoOfTotalResponse() == null ? 1 : survey.getNoOfTotalResponse() + 1);
-            questionService.incrementResponse(survey.getSurveyId(), resultModels);
         }
         return surveyRepository.save(survey);
     }
