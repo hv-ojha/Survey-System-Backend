@@ -22,4 +22,7 @@ public class Survey {
     @JsonManagedReference
     private List<Question> question;
     private Integer noOfTotalResponse;
+    @OneToMany(mappedBy = "survey")
+    @JsonManagedReference
+    private List<Response> responses;
 }

@@ -1,6 +1,7 @@
 package com.application.SurveySystem.Service;
 
 import com.application.SurveySystem.Model.Question;
+import com.application.SurveySystem.Model.Response;
 import com.application.SurveySystem.Model.ResultModel;
 import com.application.SurveySystem.Model.Survey;
 import com.application.SurveySystem.Repository.SurveyRepository;
@@ -34,6 +35,19 @@ public class SurveyService {
         }
         synchronized (survey) {
             survey.setNoOfTotalResponse(survey.getNoOfTotalResponse() == null ? 1 : survey.getNoOfTotalResponse() + 1);
+        }
+        return surveyRepository.save(survey);
+    }
+
+    public Survey submitResponse(Response response) throws Exception {
+        if(response.getSurvey() == null || response.getAnswers().isEmpty()) {
+            throw new Exception("No such Survey Exist");
+        }
+        Survey survey = getSurvey(response.getSurvey().getSurveyId());
+        if(survey == null)
+            throw new Exception("No survey exist");
+        synchronized (survey) {
+            survey.setNoOfTotalResponse((survey.getNoOfTotalResponse() == null) ? 1 : (survey.getNoOfTotalResponse() + 1));
         }
         return surveyRepository.save(survey);
     }
